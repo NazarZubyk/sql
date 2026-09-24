@@ -1,7 +1,7 @@
-# MSSQL dev database
+# MySQL dev database
 
-SQL Server 2025 (Developer edition) running in Docker, intended for local development.
-Everything lives in the [DB/](DB/) folder — no custom image, just the official one.
+MySQL 9.7 (LTS) running in Docker, intended for local development.
+Everything lives in the [DB/](DB/) folder — just the official image, no custom build.
 
 ## Run
 
@@ -10,7 +10,8 @@ cd DB
 docker compose up
 ```
 
-Run it **in the foreground** (do not add `-d`). The first run downloads the image (~1.7 GB).
+Run it **in the foreground** (do not add `-d`). The first run downloads the image (~600 MB)
+and takes a bit longer to initialize.
 
 ## Stop
 
@@ -21,25 +22,32 @@ The database will **not** start on system boot or after a crash (`restart: "no"`
 
 ## Configuration
 
-The sa password is set in `DB/.env` (see `DB/.env.example` for a template).
+Values live in `DB/.env` (see `DB/.env.example` for a template):
+
+| Variable | Default | Meaning |
+|---|---|---|
+| `MYSQL_ROOT_PASSWORD` | `YourStrong!Passw0rd` | root password |
+| `MYSQL_DATABASE` | `AppDb` | database created automatically on first start |
 
 ## Connection
 
 ```
-Server:   localhost,1433
-Login:    sa
-Password: value of MSSQL_SA_PASSWORD from DB/.env
+Host:     127.0.0.1
+Port:     3306
+User:     root
+Password: value of MYSQL_ROOT_PASSWORD from DB/.env
+Database: AppDb
 ```
 
-Example connection string:
+JDBC URL example:
 
 ```
-Server=localhost,1433;Database=AppDb;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=True;
+jdbc:mysql://127.0.0.1:3306/AppDb
 ```
 
 ## Data
 
-Data is stored in the named Docker volume `mssql_data`, so it survives
+Data is stored in the named Docker volume `mysql_data`, so it survives
 `Ctrl+C` / closing the terminal / `docker compose down`.
 
 To wipe everything and start from scratch:

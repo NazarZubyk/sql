@@ -1,16 +1,20 @@
 services:
   db:
-    image: mcr.microsoft.com/mssql/server:2025-latest
-    container_name: spp-mssql
+    image: mysql:9.7
+    container_name: spp-mysql
+    # Never auto-start on boot or after a crash: the DB runs only while
+    # `docker compose up` is running in this folder.
     restart: "no"
     ports:
-      - "1433:1433"
+      - "3306:3306"
     environment:
-      ACCEPT_EULA: "Y"
-      MSSQL_PID: "Developer"
-      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD:?set MSSQL_SA_PASSWORD in .env}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?set MYSQL_ROOT_PASSWORD in .env}
+      # Created automatically on first start
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-AppDb}
     volumes:
-      - mssql_data:/var/opt/mssql
+      # Keeps data between restarts; survives `docker compose down`.
+      # Remove it with `docker compose down -v` to start from scratch.
+      - mysql_data:/var/lib/mysql
 
 volumes:
-  mssql_data:
+  mysql_data:
