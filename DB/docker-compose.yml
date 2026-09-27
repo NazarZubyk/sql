@@ -9,8 +9,6 @@ services:
       - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?set MYSQL_ROOT_PASSWORD in .env}
-      # Created automatically on first start
-      MYSQL_DATABASE: ${MYSQL_DATABASE:-AppDb}
     volumes:
       # Keeps data between restarts; survives `docker compose down`.
       # Remove it with `docker compose down -v` to start from scratch.

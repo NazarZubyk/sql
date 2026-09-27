@@ -22,12 +22,10 @@ The database will **not** start on system boot or after a crash (`restart: "no"`
 
 ## Configuration
 
-Values live in `DB/.env` (see `DB/.env.example` for a template):
+The root password is set in `DB/.env` (see `DB/.env.example` for a template).
 
-| Variable | Default | Meaning |
-|---|---|---|
-| `MYSQL_ROOT_PASSWORD` | `YourStrong!Passw0rd` | root password |
-| `MYSQL_DATABASE` | `AppDb` | database created automatically on first start |
+No database is created automatically — create yours in DBeaver
+(right-click the connection → Create New Database) or run `CREATE DATABASE ...`.
 
 ## Connection
 
@@ -36,13 +34,12 @@ Host:     127.0.0.1
 Port:     3306
 User:     root
 Password: value of MYSQL_ROOT_PASSWORD from DB/.env
-Database: AppDb
 ```
 
 JDBC URL example:
 
 ```
-jdbc:mysql://127.0.0.1:3306/AppDb
+jdbc:mysql://127.0.0.1:3306
 ```
 
 ## Data
