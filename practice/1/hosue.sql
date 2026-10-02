@@ -1,6 +1,6 @@
--- taxi.hosue definition
+-- taxi.house definition
 
-CREATE TABLE `hosue` (
+CREATE TABLE `house` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `streetID` int unsigned DEFAULT NULL,
   `address` varchar(100) DEFAULT NULL,
